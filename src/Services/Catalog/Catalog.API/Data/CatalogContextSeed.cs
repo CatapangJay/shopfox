@@ -23,15 +23,16 @@ namespace Catalog.API.Data
         private static IEnumerable<Product> GetProducts()
         {
             var productFaker = new Faker<Product>()
-                .RuleFor(o => o.Id, f => Guid.NewGuid().ToString())
                 .RuleFor(o => o.Name, f => f.Commerce.Product())
-                .RuleFor(o => o.Category, f => f.Commerce.Categories(new Random().Next())[new Random().Next()])
+                .RuleFor(o => o.Category, f => f.Commerce.Categories(5)[1])
                 .RuleFor(o => o.Summary, f => f.Commerce.ProductAdjective())
                 .RuleFor(o => o.Description, f => f.Commerce.ProductDescription())
-                .RuleFor(o => o.Description, f => f.Image.LoremPixelUrl("business"))
+                .RuleFor(o => o.ImageFile, f => f.Image.LoremPixelUrl("business"))
                 .RuleFor(o => o.Price, f => Decimal.Parse(f.Commerce.Price()));
 
-            return productFaker.Generate(20);
+            var fakes = productFaker.Generate(10);
+
+            return fakes;
         }
     }
 }
